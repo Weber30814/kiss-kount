@@ -7,6 +7,13 @@ Original file is located at
     https://colab.research.google.com/drive/1YtzOwHYmfz4x1yCjImva4ysE4KvgoESh
 """
 
+!pip install --upgrade seaborn patsy --quiet
+
+import pandas as pd
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+
 # Path setting
 import os
 from google.colab import drive
@@ -114,3 +121,65 @@ for var1, var2 in pairs:
     plt.grid(True)
     plt.tight_layout()
     plt.show()
+
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# 移除缺失值以防錯誤
+plot_data = df[['Kiss Count', 'Age of First Kiss']].dropna()
+
+# 畫散佈圖加回歸線
+plt.figure(figsize=(8, 6))
+sns.regplot(
+    data=plot_data,
+    x='Age of First Kiss',
+    y='Kiss Count',
+    scatter_kws={'alpha': 0.6, 'color': 'orange'},
+    line_kws={'color': 'blue'},
+)
+
+plt.title('Scatter Plot: Kiss Count vs. Age of First Kiss')
+plt.xlabel('Age of First Kiss')
+plt.ylabel('Kiss Count')
+plt.grid(True)
+plt.tight_layout()
+plt.show()
+
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# 取出有這兩欄資料的資料列
+plot_data = df[['Kiss Count', 'Age of First Kiss']].dropna()
+
+plt.figure(figsize=(8, 6))
+sns.regplot(data=plot_data, x='Age of First Kiss', y='Kiss Count', scatter_kws={'alpha': 0.6}, line_kws={'color': 'red'})
+plt.title("Scatter Plot: Age of First Kiss vs. Kiss Count")
+plt.xlabel("Age of First Kiss")
+plt.ylabel("Kiss Count")
+plt.grid(True)
+plt.tight_layout()
+plt.show()
+
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# 選擇變數
+data = df[['IQ', 'Kiss Count', 'Age of First Kiss']].dropna()
+
+# 定義變數配對
+pairs = [
+    ('IQ', 'Kiss Count'),
+    ('IQ', 'Age of First Kiss'),
+    ('Kiss Count', 'Age of First Kiss')
+]
+
+# 畫出每一對的散佈圖與回歸線
+plt.figure(figsize=(15, 5))
+for i, (x, y) in enumerate(pairs):
+    plt.subplot(1, 3, i + 1)
+    sns.regplot(data=data, x=x, y=y, scatter_kws={'alpha': 0.7}, line_kws={'color': 'red'})
+    plt.title(f"{x} vs {y}")
+    plt.grid(True)
+
+plt.tight_layout()
+plt.show()
